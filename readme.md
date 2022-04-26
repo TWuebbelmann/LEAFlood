@@ -1,4 +1,4 @@
-# LEAFlood utilizing the Catchment Modelling Framework (CMF)
+# Landscape and vEgetAtion-dependent Flood model (LEAFlood)
 
 ## General description
 
