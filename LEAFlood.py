@@ -10,16 +10,11 @@ Created on Thu May 20 15:06:37 2021
 import cmf
 import cmf.geometry 
 import numpy as np
-#from cmf.geos_shapereader import Shapefile #old from the demo version. changed with shapefile
 import shapefile #PyShp 
 import cmf.draw
-#import pylab as plt
-from matplotlib.animation import FuncAnimation # not used as the animator is not used
 from shapely.geometry import shape
-from shapely.validation import make_valid
 import pandas as pd 
 
-from datetime import datetime, timedelta # warum wird das als ungenutzt markiert? Wird bei load meteo mehrmals verwendet.
 
 import os
 
@@ -553,11 +548,11 @@ if __name__ == '__main__':
     print('Set Up Model...')
     #call the main function
     m = Model(cmf.Darcy, cmf.KinematicSurfaceRunoff, 1, in_shapefile, meteo_data, begin, timestep, station_name, init_sat_depth=init_sat_depth, verbose=False)
-    print('Run Modell...')
+    print('Run Model...')
     
     #run the modell and creating output data
     results = m.run2(step=timestep,verbose=False, export_results=True)
-    # reformat results for element #2 (outlet, see shape), ouput is waterbalance
+    # reformat results for element #2 (outlet, see shape) in m^3 / day
     outflow = pd.Series(results[0].T[2].values, 
                         index=m.get_time_dim())
     print('end')
