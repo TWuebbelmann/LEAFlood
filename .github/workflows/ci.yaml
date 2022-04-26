@@ -27,6 +27,6 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r requirements.txt
-      - name: Install requirements
+      - name: Run LEAFlood
         run: |
-          python LEAModel.py
+          python LEAFlood.py
