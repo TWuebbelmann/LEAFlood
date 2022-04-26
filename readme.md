@@ -10,7 +10,10 @@ The interception utilizes the Rutter approach. LAI, Interception capacity and ca
 
 It is published as free software under [GPLv3](http://www.gnu.org/licenses/gpl.html). (c) 2022 by Thea Wübbelmann and Kristian Förster.
 
-## How to use LEAFLood
+## How to install LEAFlood
+Most [requirements](requirements.txt) are available in most Python setups. CMF is available through the Python Package Index. Further infomration on installing CMF is provided in the [CMF documentation](https://philippkraft.github.io/cmf/cmf_install.html). [LEAFlood.py](LEAFlood.py) includes both the model code (functions classes) and an example script. Thus, the file is executable.
+
+## How to use LEAFlood
 For simplicity, [LEAFlood.py](LEAFlood.py) includes both the model code and a simple example how to use the model. Relevant files provided alongside are:
 
 * [GIS/sample.shp](GIS/sample.shp): A simple shape file including a cascade of three polygons. The lowermost polygon is the outlet (constant head boundary condition). The shape file - or more specifically the corresponding fields file [GIS/sample.dbf](GIS/sample.dbf) - includes all relevant fields required to run simulations with LEAFlood. The field names are self-explanatory, so it should be easy to prepare similar input files for own applications.
