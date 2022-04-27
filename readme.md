@@ -1,5 +1,7 @@
 # Landscape and vEgetAtion-dependent Flood model (LEAFlood)
 
+[![Run LEAFlood](https://github.com/TWuebbelmann/LEAFlood/actions/workflows/run.yaml/badge.svg)](https://github.com/TWuebbelmann/LEAFlood/actions/workflows/run.yaml)
+
 ## General description
 
 The LEAFlood model is based on existing model components of the Catchment Modelling Framework (CMF). It is in between a conceptual and physically-based, distributed, deterministic model.

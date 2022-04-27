@@ -1,0 +1,38 @@
+name: Run LEAFlood
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  test:
+    name: py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -l {0}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        # Bookend python versions
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags.
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Run LEAFlood
+        run: |
+          python LEAFlood.py
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Results for ${{ runner.os }}-${{ matrix.python-version }}
+          path: output/*
