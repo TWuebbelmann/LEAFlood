@@ -1,6 +1,7 @@
 # Landscape and vEgetAtion-dependent Flood model (LEAFlood)
 
 [![Run LEAFlood](https://github.com/TWuebbelmann/LEAFlood/actions/workflows/run.yaml/badge.svg)](https://github.com/TWuebbelmann/LEAFlood/actions/workflows/run.yaml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6594181.svg)](https://doi.org/10.5281/zenodo.6594181)
 
 ## General description
 
