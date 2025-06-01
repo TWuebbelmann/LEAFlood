@@ -19,9 +19,9 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         # Bookend python versions
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags.
       - name: Install requirements
@@ -32,7 +32,7 @@ jobs:
           python LEAFlood.py
       - name: Upload results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Results for ${{ runner.os }}-${{ matrix.python-version }}
           path: output/*
