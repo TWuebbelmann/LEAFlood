@@ -440,7 +440,11 @@ class Model:
         self.project = p
         # I have nothing changed here. But here is the documentation link
         # https://philippkraft.github.io/cmf/cmf_tut_solver.html
-        self.solver = cmf.CVodeIntegrator(p, 1e-9)
+        # auto select cmf version
+        if int(cmf.__version__.split('.')[0])>=2:
+            self.solver = cmf.CVodeKLU(p, 1e-9)
+        else:
+            self.solver = cmf.CVodeIntegrator(p, 1e-9)
         self.solver.t = p.meteo_stations[0].T.begin
 
     
@@ -471,7 +475,7 @@ class Model:
 
             list_surfaceDepth, list_soilWater, list_usedSoilCap, list_interception = self.get_cell_parameters(t)
             o_id, o_x, o_y, o_area, list_waterbalance = self.get_outlet_fluxes(t)
-            list_t.append(t)
+            list_t.append(t.as_datetime())
             list_i.append(i)
             
             if i == 0: # first timestep is with cell information (ID and coordinates)
@@ -523,10 +527,13 @@ class Model:
             dftr_Interception.to_excel(os.path.join(path, folder, 'InterceptWater.xlsx'), float_format='%.5f', na_rep = 'N/A')
             dftr_waterbalance.to_excel(os.path.join(path, folder, 'WaterbalanceOutlets.xlsx'), float_format='%.5f', na_rep = 'N/A')
             if verbose: print('Done.')
-        return dftr_waterbalance, dftr_surfacewater, dftr_SoilWater, dftr_Interception # returns time series for each outlet
+        return dftr_waterbalance, dftr_surfacewater, dftr_SoilWater, dftr_Interception, list_t # returns time series for each outlet
     
     def get_time_dim(self):
         return self.project.rainfall_stations[0].data.to_pandas().index
+
+
+
 
 if __name__ == '__main__':    
 
@@ -553,10 +560,17 @@ if __name__ == '__main__':
     #run the modell and creating output data
     results = m.run2(step=timestep,verbose=False, export_results=True)
     # reformat results for element #2 (outlet, see shape) in m^3 / day
-    outflow = pd.Series(results[0].T[2].values, 
-                        index=m.get_time_dim())
+    # update summarize all outflows in a single series
+    outflow = pd.Series(results[0].sum(axis=0).T.values, results[-1])
+    
+    rainfall = m.project.rainfall_stations[0].data.to_pandas()
+    df = pd.DataFrame(data={'rainfall':rainfall,
+                            'runoff': outflow})
+
+    
     print('end')
 
     # plot outflow
-    outflow.plot()
+    print(df)
+    
 
