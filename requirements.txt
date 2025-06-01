@@ -1,6 +1,6 @@
 numpy
 pandas
-cmf==1.6.0
+cmf
 shapely==1.8.5
 pyshp
 matplotlib
