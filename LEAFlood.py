@@ -512,7 +512,7 @@ class Model:
         dftr_waterbalance = df_waterbalance.transpose()
         dftr_waterbalance.columns = list_i
         
-        
+        self.time_index = list_t
         if export_results:
             if verbose: print('Exporting results...')
             path = r'.'
@@ -527,10 +527,10 @@ class Model:
             dftr_Interception.to_excel(os.path.join(path, folder, 'InterceptWater.xlsx'), float_format='%.5f', na_rep = 'N/A')
             dftr_waterbalance.to_excel(os.path.join(path, folder, 'WaterbalanceOutlets.xlsx'), float_format='%.5f', na_rep = 'N/A')
             if verbose: print('Done.')
-        return dftr_waterbalance, dftr_surfacewater, dftr_SoilWater, dftr_Interception, list_t # returns time series for each outlet
+        return dftr_waterbalance, dftr_surfacewater, dftr_SoilWater, dftr_Interception # returns time series for each outlet
     
     def get_time_dim(self):
-        return self.project.rainfall_stations[0].data.to_pandas().index
+        return self.time_index
 
 
 
@@ -561,7 +561,7 @@ if __name__ == '__main__':
     results = m.run2(step=timestep,verbose=False, export_results=True)
     # reformat results for element #2 (outlet, see shape) in m^3 / day
     # update summarize all outflows in a single series
-    outflow = pd.Series(results[0].sum(axis=0).T.values, results[-1])
+    outflow = pd.Series(results[0].sum(axis=0).T.values, m.get_time_dim())
     
     rainfall = m.project.rainfall_stations[0].data.to_pandas()
     df = pd.DataFrame(data={'rainfall':rainfall,
